@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-# main.py - MZKYZAK OTP SPAMMER SYSTEM (SIMPLE WORKING VERSION)
-# HAK TUAN MZKYZAK! 💀😈
+# main.py - Spammer OTP WhatsApp
 
 import sys
 import time
@@ -8,45 +7,14 @@ import platform
 from datetime import datetime
 from colorama import Fore, Style
 
-# ==================== MZKYZAK BANNER ====================
-BANNER = '''  ╔═══════════════════════════════════════════════════════════╗
-  ║  ███╗   ███╗███████╗██╗  ██╗██╗   ██╗███████╗ █████╗  ║
-  ║  ████╗ ████║╚══███╔╝██║ ██╔╝╚██╗ ██╔╝╚══███╔╝██╔══██╗ ║
-  ║  ██╔████╔██║  ███╔╝ █████╔╝  ╚████╔╝   ███╔╝ ███████║ ║
-  ║  ██║╚██╔╝██║ ███╔╝  ██╔═██╗   ╚██╔╝   ███╔╝  ██╔══██║ ║
-  ║  ██║ ╚═╝ ██║███████╗██║  ██╗   ██║   ███████╗██║  ██║ ║
-  ║  ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝ ║
-  ╠═══════════════════════════════════════════════════════════╣
-  ║  [🔥]  MZKYZAK SMS OTP SPAMMER — BANJIR OTP           ║
-  ║  [💀]  ZXZBEDST VERIFIED — MULTI-THREAD              ║
-  ║  [⚡]  HAK TUAN — TANPA BATAS                        ║
-  ║  [🎯]  K MANA → POSISI 3: M Z K Y Z A K            ║
-  ╚═══════════════════════════════════════════════════════════╝'''
+from license import (
+    clear_screen, log_info, log_success, log_warning, log_error, log_input, log_header,
+    check_license, use_quota, get_device_id, check_user,
+    get_license_price, get_whatsapp_admin, get_telegram_username, get_active_apis,
+    is_maintenance, get_maintenance_message, get_trial_quota, get_total_users,
+    VERSION, TOOLS_NAME, BANNER, get_user_stats
+)
 
-# ==================== SIMPLE LOGGING ====================
-def clear_screen():
-    print("\033[H\033[J")
-
-def log_header():
-    clear_screen()
-    print(Fore.RED + BANNER + Style.RESET_ALL)
-    print(Fore.CYAN + "MZKYZAK OTP Spammer System v3.1 PRO" + Style.RESET_ALL)
-    print(Fore.YELLOW + "© 2026 MZKYZAK PROFESSIONAL SYSTEMS" + Style.RESET_ALL)
-    print()
-
-def log_info(msg):
-    print(Fore.BLUE + "[*] " + Fore.WHITE + msg + Style.RESET_ALL)
-
-def log_success(msg):
-    print(Fore.GREEN + "[+] " + Fore.WHITE + msg + Style.RESET_ALL)
-
-def log_warning(msg):
-    print(Fore.YELLOW + "[-] " + Fore.WHITE + msg + Style.RESET_ALL)
-
-def log_error(msg):
-    print(Fore.RED + "[!] " + Fore.WHITE + msg + Style.RESET_ALL)
-
-# ==================== SIMPLE FUNCTIONS ====================
 def get_formatted_datetime():
     now = datetime.now()
     days = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"]
@@ -62,127 +30,211 @@ def get_device_name():
     try:
         return platform.node()
     except:
-        return "MZKYZAK_Device"
+        return "Unknown Device"
 
 def show_user_stats():
-    print(f"{Fore.CYAN}System Status:{Style.RESET_ALL}")
-    print(f"  Owner     : {Fore.GREEN}MZKYZAK{Style.RESET_ALL}")
-    print(f"  Key       : {Fore.YELLOW}ZXZBEDST VERIFIED{Style.RESET_ALL}")
-    print(f"  Contact   : {Fore.GREEN}@MZKYZAK_OFFICIAL{Style.RESET_ALL}")
-    print(f"  APIs      : {Fore.WHITE}39+ Active{Style.RESET_ALL}")
-    print(f"  Threads   : {Fore.WHITE}1-10 Configurable{Style.RESET_ALL}")
+    premium, trial = get_user_stats()
+    total = premium + trial
+    print(f"{Fore.CYAN}Total Pengguna  : {Fore.WHITE}{total}{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}├─ Premium      : {Fore.GREEN}{premium}{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}└─ Trial        : {Fore.YELLOW}{trial}{Style.RESET_ALL}")
 
-# ==================== SIMPLE MENU ====================
+def show_buy_guide():
+    clear_screen()
+    log_header()
+    license_price = get_license_price()
+    whatsapp_admin = get_whatsapp_admin()
+    telegram_username = get_telegram_username()
+    total_apis = get_active_apis()
+    
+    print(f"{Fore.CYAN}PANDUAN PEMBELIAN LISENSI PREMIUM{Style.RESET_ALL}")
+    print()
+    print(f"{Fore.WHITE}Keuntungan Premium:{Style.RESET_ALL}")
+    print(f"  {Fore.GREEN}•{Style.RESET_ALL} Akses FULL semua API ({total_apis} API)")
+    print(f"  {Fore.GREEN}•{Style.RESET_ALL} Unlimited penggunaan (tanpa batas kuota)")
+    print(f"  {Fore.GREEN}•{Style.RESET_ALL} Mendapat update tools terbaru")
+    print(f"  {Fore.GREEN}•{Style.RESET_ALL} Mendapat API baru jika ditambahkan")
+    print(f"  {Fore.GREEN}•{Style.RESET_ALL} Dukungan prioritas dari admin")
+    print()
+    print(f"{Fore.CYAN}Harga: {Fore.GREEN}Rp. {license_price:,}{Style.RESET_ALL} (sekali bayar, akses selamanya)")
+    print()
+    print(f"{Fore.YELLOW}Cara Pembelian:{Style.RESET_ALL}")
+    print(f"  1. Chat admin via WhatsApp atau Telegram")
+    print(f"  2. Kirim Device ID Anda")
+    print(f"  3. Lakukan pembayaran via QRIS (akan diberikan admin)")
+    print(f"  4. Tunggu aktivasi")
+    print()
+    print(f"{Fore.CYAN}Kontak Admin:{Style.RESET_ALL}")
+    print(f"  WhatsApp : {Fore.GREEN}{whatsapp_admin}{Style.RESET_ALL}")
+    print(f"  Telegram : {Fore.WHITE}{telegram_username}{Style.RESET_ALL}")
+    print()
+    print(f"{Fore.CYAN}Device ID Anda:{Style.RESET_ALL}")
+    print(f"  {Fore.WHITE}{get_device_id()}{Style.RESET_ALL}")
+    print()
+    input("Tekan Enter untuk kembali ke menu utama...")
+
 def show_menu_trial():
     print(f"{Fore.CYAN}Menu Trial{Style.RESET_ALL}")
-    print(f"  {Fore.GREEN}[1]{Style.RESET_ALL} Single Target Test")
-    print(f"  {Fore.GREEN}[2]{Style.RESET_ALL} About MZKYZAK System")
-    print(f"  {Fore.GREEN}[3]{Style.RESET_ALL} Exit")
+    print(f"  {Fore.GREEN}[1]{Style.RESET_ALL} Jalankan Single Round")
+    print(f"  {Fore.GREEN}[2]{Style.RESET_ALL} Beli Lisensi Premium")
+    print(f"  {Fore.GREEN}[3]{Style.RESET_ALL} Keluar")
     print()
 
 def show_menu_premium():
     print(f"{Fore.CYAN}Menu Premium{Style.RESET_ALL}")
-    print(f"  {Fore.GREEN}[1]{Style.RESET_ALL} Single Target")
-    print(f"  {Fore.GREEN}[2]{Style.RESET_ALL} Multi-Thread (5 threads)")
-    print(f"  {Fore.GREEN}[3]{Style.RESET_ALL} System Status")
-    print(f"  {Fore.GREEN}[4]{Style.RESET_ALL} About")
-    print(f"  {Fore.GREEN}[5]{Style.RESET_ALL} Exit")
+    print(f"  {Fore.GREEN}[1]{Style.RESET_ALL} Single Round")
+    print(f"  {Fore.GREEN}[2]{Style.RESET_ALL} Infinite Loop")
+    print(f"  {Fore.GREEN}[3]{Style.RESET_ALL} Keluar")
     print()
 
-def single_target():
-    log_info("Single target mode")
-    log_info("Preparing to send OTP...")
-    time.sleep(1)
-    log_success("OTP sent successfully! (simulated)")
-    time.sleep(1)
+def check_update():
+    clear_screen()
+    log_header()
+    print(f"{Fore.CYAN}CEK UPDATE & KETERSEDIAAN API{Style.RESET_ALL}")
+    print()
+    current_version = VERSION
+    latest_version = "3.1"
+    if current_version == latest_version:
+        log_success(f"Tools versi {current_version} adalah versi terbaru.")
+    else:
+        log_warning(f"Versi terbaru: {latest_version} | Versi saat ini: {current_version}")
+        log_info("Kunjungi repository untuk update.")
+    print()
+    total_apis = get_active_apis()
+    print(f"{Fore.CYAN}Ketersediaan API:{Style.RESET_ALL}")
+    print(f"  Total API   : {Fore.WHITE}{total_apis}{Style.RESET_ALL}")
+    print(f"  API Aktif   : {Fore.GREEN}{total_apis}{Style.RESET_ALL}")
+    print()
+    input("Tekan Enter untuk kembali ke menu utama...")
 
-def multi_thread():
-    log_info("Multi-thread mode (5 threads)")
-    for i in range(5):
-        log_success(f"Thread {i+1}: Sending OTP...")
-        time.sleep(0.3)
-    log_success("All threads completed!")
+def show_thread_menu():
+    clear_screen()
+    log_header()
+    print(f"{Fore.CYAN}Pilih Jumlah Thread (default 1){Style.RESET_ALL}")
+    print()
+    print(f"  {Fore.GREEN}[1]{Style.RESET_ALL} 1 Thread (slow)")
+    print(f"  {Fore.GREEN}[2]{Style.RESET_ALL} 2 Thread")
+    print(f"  {Fore.GREEN}[3]{Style.RESET_ALL} 3 Thread")
+    print(f"  {Fore.GREEN}[4]{Style.RESET_ALL} 4 Thread")
+    print(f"  {Fore.GREEN}[5]{Style.RESET_ALL} 5 Thread (recommended)")
+    print(f"  {Fore.GREEN}[6]{Style.RESET_ALL} 6 Thread")
+    print(f"  {Fore.GREEN}[7]{Style.RESET_ALL} 7 Thread")
+    print(f"  {Fore.GREEN}[8]{Style.RESET_ALL} 8 Thread")
+    print(f"  {Fore.GREEN}[9]{Style.RESET_ALL} 9 Thread")
+    print(f"  {Fore.GREEN}[10]{Style.RESET_ALL} 10 Thread (fast)")
+    print()
+    return log_input("Pilih thread (1-10, enter untuk default 1): ").strip()
 
-def about_system():
-    log_info("About MZKYZAK System")
-    print(f"\n{Fore.CYAN}MZKYZAK PROFESSIONAL OTP SPAMMER{Style.RESET_ALL}")
-    print(f"{Fore.WHITE}Version: 3.1 PRO{Style.RESET_ALL}")
-    print(f"{Fore.WHITE}Year: 2026{Style.RESET_ALL}")
-    print(f"{Fore.WHITE}Owner: MZKYZAK{Style.RESET_ALL}")
-    print(f"{Fore.WHITE}Verification: ZXZBEDST{Style.RESET_ALL}")
-    print(f"{Fore.WHITE}Contact: @MZKYZAK_OFFICIAL{Style.RESET_ALL}")
-    print(f"\n{Fore.YELLOW}K MANA EXPLANATION:{Style.RESET_ALL}")
-    print(f"  Position 3 in MZKYZAK: M(1) Z(2) {Fore.RED}K(3){Style.RESET_ALL} Y(4) Z(5) A(6) K(7)")
-
-# ==================== MAIN FUNCTION ====================
 def main():
-    """Main simple working function"""
-    # Always premium mode (simplified)
-    status = "premium"
+    status, quota, device_id = check_license()
     
-    while True:
-        log_header()
-        print(f"{Fore.CYAN}{get_formatted_datetime()} | {Fore.WHITE}{get_device_name()}{Style.RESET_ALL}")
-        print()
-        show_user_stats()
-        print()
-        
-        if status == "premium":
-            print(f"{Fore.GREEN}⚡ PREMIUM ACTIVE - FULL ACCESS{Style.RESET_ALL}")
-            print(f"{Fore.CYAN}Thank you for choosing MZKYZAK!{Style.RESET_ALL}")
+    if status == "trial":
+        while True:
+            clear_screen()
+            log_header()
+            print(f"{Fore.CYAN}{get_formatted_datetime()} | {Fore.WHITE}{get_device_name()}{Style.RESET_ALL}")
             print()
-            show_menu_premium()
-            
-            choice = input(f"{Fore.YELLOW}Select option (1-5): {Style.RESET_ALL}").strip()
-            
-            if choice == "1":
-                single_target()
-                input("\nPress Enter to continue...")
-            elif choice == "2":
-                multi_thread()
-                input("\nPress Enter to continue...")
-            elif choice == "3":
-                show_user_stats()
-                input("\nPress Enter to continue...")
-            elif choice == "4":
-                about_system()
-                input("\nPress Enter to continue...")
-            elif choice == "5":
-                log_info("Exiting MZKYZAK System...")
-                sys.exit(0)
-            else:
-                log_warning("Invalid option!")
-                time.sleep(1)
-        else:
-            # Trial mode (simplified)
-            print(f"{Fore.YELLOW}Mode Trial - Limited Access{Style.RESET_ALL}")
+            show_user_stats()
+            print()
+            trial_quota = get_trial_quota()
+            print(f"{Fore.YELLOW}Mode Trial - Sisa Kuota: {quota}/{trial_quota}{Style.RESET_ALL}")
+            print(f"{Fore.CYAN}Hanya bisa menggunakan Single Round.{Style.RESET_ALL}")
             print()
             show_menu_trial()
             
-            choice = input(f"{Fore.YELLOW}Select option (1-3): {Style.RESET_ALL}").strip()
+            choice = log_input("Pilih menu (1/2/3): ").strip()
             
             if choice == "1":
-                single_target()
-                input("\nPress Enter to continue...")
+                if quota <= 0:
+                    log_warning("Kuota trial habis!")
+                    log_info("Silakan beli lisensi premium untuk melanjutkan.")
+                    print()
+                    input("Tekan Enter untuk melihat panduan pembelian...")
+                    show_buy_guide()
+                    user = check_user(device_id)
+                    if user:
+                        quota = user.get("quota", 0)
+                    continue
+                
+                from main_engine import run_single_round
+                success = run_single_round(threads=1)
+                
+                if use_quota(device_id):
+                    user = check_user(device_id)
+                    if user:
+                        quota = user.get("quota", 0)
+                        log_info(f"Sisa kuota sekarang: {quota}/{trial_quota}")
+                else:
+                    log_error("Gagal mengurangi kuota!")
+                
+                if quota == 0:
+                    log_info("Kuota Anda telah habis.")
+                    print()
+                    input("Tekan Enter untuk melihat panduan pembelian...")
+                    show_buy_guide()
+                    user = check_user(device_id)
+                    if user:
+                        quota = user.get("quota", 0)
+                    continue
+                
+                log_info("Tekan Enter untuk kembali ke menu...")
+                input()
+            
             elif choice == "2":
-                about_system()
-                input("\nPress Enter to continue...")
+                show_buy_guide()
+                user = check_user(device_id)
+                if user:
+                    quota = user.get("quota", 0)
+            
             elif choice == "3":
-                log_info("Exiting...")
+                log_info("Keluar...")
                 sys.exit(0)
+            
             else:
-                log_warning("Invalid option!")
-                time.sleep(1)
+                log_warning("Pilihan tidak valid. Tekan Enter untuk kembali...")
+                input()
+    
+    elif status == "premium":
+        while True:
+            clear_screen()
+            log_header()
+            print(f"{Fore.CYAN}{get_formatted_datetime()} | {Fore.WHITE}{get_device_name()}{Style.RESET_ALL}")
+            print()
+            show_user_stats()
+            print()
+            print(f"{Fore.GREEN}Premium Active - Full Access{Style.RESET_ALL}")
+            print(f"{Fore.CYAN}Terima kasih sudah membeli lisensi premium!{Style.RESET_ALL}")
+            print()
+            show_menu_premium()
+            
+            choice = log_input("Pilih menu (1/2/3): ").strip()
+            
+            if choice == "1":
+                thread_choice = show_thread_menu()
+                try:
+                    threads = int(thread_choice) if thread_choice.strip() else 1
+                    if threads < 1: threads = 1
+                    elif threads > 10: threads = 10
+                except:
+                    threads = 1
+                from main_engine import run_single_round
+                run_single_round(threads=threads)
+                log_info("Tekan Enter untuk kembali ke menu...")
+                input()
+            
+            elif choice == "2":
+                from main_engine import run_infinite_loop
+                run_infinite_loop()
+                log_info("Tekan Enter untuk kembali ke menu...")
+                input()
+            
+            elif choice == "3":
+                log_info("Keluar...")
+                sys.exit(0)
+            
+            else:
+                log_warning("Pilihan tidak valid. Tekan Enter untuk kembali...")
+                input()
 
-# ==================== ENTRY POINT ====================
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        print(f"\n{Fore.YELLOW}Exiting MZKYZAK System...{Style.RESET_ALL}")
-        sys.exit(0)
-    except Exception as e:
-        print(f"\n{Fore.RED}Error: {e}{Style.RESET_ALL}")
-        print(f"{Fore.YELLOW}System will restart...{Style.RESET_ALL}")
-        time.sleep(2)
-        main()
+    main()
